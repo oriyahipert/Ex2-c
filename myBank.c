@@ -1,11 +1,9 @@
 #include "myBank.h"
 #include <stdio.h>
 
-double bank [2][50] = {0};
-
 void open(double amount){
-    int j;
-        for (j = 0; j < 50;){
+    int j = 0;
+        for (j = 0; j < NUM_ACCOUNTS;){
             if (bank[0][j] == 0){
                 bank[0][j] = 1;
                 printf("the account number is:%d \n \n" ,900+1+j);
@@ -42,17 +40,16 @@ void deposit(int account_num , double amount){
 }
 
 void withdraw(int account_num , double amount){
-    int j = account_num-900-1;
-    if (bank[0][j] == 0){
+    if (bank[0][account_num] == 0){
         printf("this account is close \n \n");
     }else{
-    double x = bank[1][j] - amount;
+    double x = bank[1][account_num] - amount;
     if (x < 0){
         printf("Error: your account is empty, you can not withdraw this amount. please enter your amount again \n \n");
     }else{
-        bank[1][j] = x;
+        bank[1][account_num] = x;
     }
-    printf("the  new balance is: %lf \n \n" ,bank[1][j]);
+    printf("the  new balance is: %lf \n \n" ,bank[1][account_num]);
 }
 }
 
@@ -67,7 +64,7 @@ void close(int account_num){
 
 void interest(double rate){
     double x = 0;
-    for(int j = 0; j < 50; j++){
+    for(int j = 0; j < NUM_ACCOUNTS; j++){
         if(bank[0][j] == 1){
             x=(rate*bank[1][j])/100;
             bank[1][j] += x;
@@ -76,17 +73,17 @@ void interest(double rate){
 }
 
 void print(){
-    for (int j = 0; j < 50; j++){
+    for (int j = 0; j < NUM_ACCOUNTS; j++){
         if (bank[0][j] == 1){
             int n = 901 + j;
-            printf("the account number is: %d \n \n" ,n);
+            printf("the account number is : %d , " ,n);
             printf("the balance of this account is: %0.2lf \n \n" ,bank[1][j]);
         }
     }
 }
 
 void closeAll(){
-   for (int j = 0; j < 50; j++){
+   for (int j = 0; j < NUM_ACCOUNTS; j++){
        bank[0][j] = 0;
        bank[1][j] = 0;
    } 
